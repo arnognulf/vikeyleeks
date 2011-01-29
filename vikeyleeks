@@ -83,8 +83,8 @@ Enabling mouse keys as h,j,k,l. Use space for clicking. Press the vikeyleeks but
     test -f "${HOME}/.vikeyleeks.bak" || xmodmap -pke > "${HOME}/.vikeyleeks.bak"
     xmodmap -e 'keycode 45 = KP_Up'    # k
     xmodmap -e 'keycode 44 = KP_Down'  # j
-    xmodmap -e 'keycode 43 = KP_Right' # h
-    xmodmap -e 'keycode 46 = KP_Left'  # l
+    xmodmap -e 'keycode 43 = KP_Left' # h
+    xmodmap -e 'keycode 46 = KP_Right'  # l
     xmodmap -e 'keycode 65 = KP_Add XF86_Next_VMode KP_Add XF86_Next_VMode'
                                                         
     gconftool-2 --set /desktop/gnome/accessibility/keyboard/mousekeys_enable --type boolean "true"
