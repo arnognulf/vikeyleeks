@@ -1,0 +1,92 @@
+#!/bin/bash
+###############################################################################
+#  VI Key Leeks, (c) 2011 Thomas Eriksson <thomas.eriksson at gmail.com>
+#  This script provides vi like navigation for the mouse cursor in X.
+#  Dependencies: gnome assistive tools, gconftool-2, and xmodmap
+# 
+#  Installation:
+#  1. Enable Assistive technologies in gnome
+#  2. Open Keyboard Shortcuts in gnome
+#  3. Press "Add", put the full path to "vikeyleeks" in the Command-field.
+#  4. Enter the key combo which will be used for toggling vikeyleeks on and off (I use XF86Eject which is the top right key on my mac keyboard), ESC will unfortually interfere with vim.
+#
+# Licensing/distribution/etc.
+# Do whatever you want with this, if it breaks you get to keep the pieces.
+# No diplomats or other public profiles were embarrassed in the making of this software.
+#  
+###############################################################################
+
+if test $(gconftool-2 --get /desktop/gnome/accessibility/keyboard/mousekeys_enable) = true
+then
+    echo "~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+ -- INSERT -- "
+    if test -f "${HOME}/.vikeyleeks.bak"
+    then
+        xmodmap "${HOME}/.vikeyleeks.bak"
+        rm "${HOME}/.vikeyleeks.bak"
+    else
+        xmodmap -e 'keycode  43 = h H h H'
+        xmodmap -e 'keycode  44 = j J j J'
+        xmodmap -e 'keycode  45 = k K k K'
+        xmodmap -e 'keycode  46 = l L l L'
+        xmodmap -e 'keycode  55 = v V v V'
+        xmodmap -e 'keycode  29 = y Y y Y'
+        xmodmap -e 'keycode  31 = i I i I'
+        xmodmap -e 'keycode  32 = o O o O'
+        xmodmap -e 'keycode  33 = p P p P'
+        xmodmap -e 'keycode  25 = w W w W'
+        xmodmap -e 'keycode  56 = b B b B'
+        xmodmap -e 'keycode  65 = space NoSymbol space'
+    fi
+    gconftool-2 --set /desktop/gnome/accessibility/keyboard/mousekeys_enable --type boolean "false"
+
+else
+    echo "~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+Enabling mouse keys as h,j,k,l. Use space for clicking. Press the vikeyleeks button to toggle on/off."
+    test -f "${HOME}/.vikeyleeks.bak" || xmodmap -pke > "${HOME}/.vikeyleeks.bak"
+    xmodmap -e 'keycode 45 = KP_Up'    # k
+    xmodmap -e 'keycode 44 = KP_Down'  # j
+    xmodmap -e 'keycode 43 = KP_Right' # h
+    xmodmap -e 'keycode 46 = KP_Left'  # l
+    xmodmap -e 'keycode 65 = KP_Add XF86_Next_VMode KP_Add XF86_Next_VMode'
+                                                        
+    gconftool-2 --set /desktop/gnome/accessibility/keyboard/mousekeys_enable --type boolean "true"
+fi
+
